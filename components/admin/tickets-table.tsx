@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import { Loader2, Trash2 } from "lucide-react";
 import type { Database } from "@/types/database";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -9,7 +13,20 @@ interface TicketsTableProps {
   tickets: TicketOrderRow[];
 }
 
-export function TicketsTable({ tickets }: TicketsTableProps) {
+export function TicketsTable({ tickets: initialTickets }: TicketsTableProps) {
+  const [tickets, setTickets] = useState(initialTickets);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  async function deleteTicket(id: string) {
+    if (!confirm("Are you sure you want to delete this order?")) return;
+    setDeletingId(id);
+    const response = await fetch(`/api/admin/tickets/${id}`, { method: "DELETE" });
+    setDeletingId(null);
+    if (response.ok) {
+      setTickets((prev) => prev.filter((t) => t.id !== id));
+    }
+  }
+
   return (
     <section id="tickets" className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -29,6 +46,7 @@ export function TicketsTable({ tickets }: TicketsTableProps) {
               <TableHead>Amount</TableHead>
               <TableHead>Payment</TableHead>
               <TableHead>Date</TableHead>
+              <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -46,6 +64,20 @@ export function TicketsTable({ tickets }: TicketsTableProps) {
                 <TableCell>{ticket.amount_jod}</TableCell>
                 <TableCell>{ticket.payment_status}</TableCell>
                 <TableCell>{formatDate(ticket.created_at)}</TableCell>
+                <TableCell>
+                  <Button
+                    size="sm"
+                    variant="danger"
+                    onClick={() => deleteTicket(ticket.id)}
+                    disabled={deletingId === ticket.id}
+                  >
+                    {deletingId === ticket.id ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Trash2 className="h-4 w-4" />
+                    )}
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
