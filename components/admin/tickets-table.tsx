@@ -16,9 +16,10 @@ interface TicketsTableProps {
 export function TicketsTable({ tickets: initialTickets }: TicketsTableProps) {
   const [tickets, setTickets] = useState(initialTickets);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmId, setConfirmId] = useState<string | null>(null);
 
   async function deleteTicket(id: string) {
-    if (!confirm("Are you sure you want to delete this order?")) return;
+    setConfirmId(null);
     setDeletingId(id);
     const response = await fetch(`/api/admin/tickets/${id}`, { method: "DELETE" });
     setDeletingId(null);
@@ -29,6 +30,24 @@ export function TicketsTable({ tickets: initialTickets }: TicketsTableProps) {
 
   return (
     <section id="tickets" className="space-y-4">
+
+      {confirmId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-zinc-900 p-6 shadow-2xl">
+            <h4 className="font-heading text-lg font-bold">Delete Order</h4>
+            <p className="mt-2 text-sm text-white/70">Are you sure you want to delete this order? This action cannot be undone.</p>
+            <div className="mt-6 flex justify-end gap-3">
+              <Button variant="outline" onClick={() => setConfirmId(null)} disabled={deletingId !== null}>
+                Cancel
+              </Button>
+              <Button variant="danger" onClick={() => deleteTicket(confirmId)} disabled={deletingId !== null}>
+                {deletingId !== null ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                Delete
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h3 className="font-heading text-2xl font-bold uppercase">Ticket Orders</h3>
         <Button asChild variant="outline">
@@ -68,7 +87,7 @@ export function TicketsTable({ tickets: initialTickets }: TicketsTableProps) {
                   <Button
                     size="sm"
                     variant="danger"
-                    onClick={() => deleteTicket(ticket.id)}
+                    onClick={() => setConfirmId(ticket.id)}
                     disabled={deletingId === ticket.id}
                   >
                     {deletingId === ticket.id ? (
