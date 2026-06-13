@@ -31,7 +31,8 @@ export interface Ticket {
   phone_number: string;
   email: string;
   quantity: number;
-  qr_code: string;
+  qr_code: string | null;
+  qr_used: boolean;
   created_at: string;
 }
 

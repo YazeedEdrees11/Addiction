@@ -146,6 +146,7 @@ export type Database = {
           payment_status: string
           phone: string | null
           phone_number: string | null
+          qr_used: boolean | null
           quantity: number
           qr_code: string | null
           ticket_type: string
@@ -161,6 +162,7 @@ export type Database = {
           payment_status?: string
           phone?: string | null
           phone_number?: string | null
+          qr_used?: boolean | null
           quantity?: number
           qr_code?: string | null
           ticket_type: string
@@ -176,6 +178,7 @@ export type Database = {
           payment_status?: string
           phone?: string | null
           phone_number?: string | null
+          qr_used?: boolean | null
           quantity?: number
           qr_code?: string | null
           ticket_type?: string

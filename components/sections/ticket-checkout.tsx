@@ -2,7 +2,7 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, Loader2, QrCode } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
 import { TICKET_TYPES } from "@/lib/constants";
 import type { TicketType } from "@/types";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 interface TicketResponse {
   id: string;
-  qrCodeDataUrl: string;
   error?: string;
 }
 
@@ -136,17 +135,15 @@ export function TicketCheckout() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-6 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4"
+              className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4"
             >
-              <p className="flex items-center gap-2 text-sm font-semibold text-emerald-300">
-                <CheckCircle2 className="h-4 w-4" /> Booking Successful
+              <p className="flex items-center gap-2 text-sm font-semibold text-amber-300">
+                <CheckCircle2 className="h-4 w-4" /> Booking Received
               </p>
               <p className="mt-2 text-sm text-white">Ticket ID: {result.id}</p>
-              <div className="mt-4 inline-flex items-center gap-3 rounded-lg bg-black/40 p-3">
-                <QrCode className="h-4 w-4 text-accent" />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={result.qrCodeDataUrl} alt={`QR for ${result.id}`} className="h-24 w-24 rounded-lg bg-white p-1" />
-              </div>
+              <p className="mt-2 text-sm text-white/70">
+                Your order is pending payment confirmation. You will receive your QR code via WhatsApp once the admin confirms your CliQ transfer.
+              </p>
             </motion.div>
           )}
         </CardContent>

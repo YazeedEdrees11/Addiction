@@ -22,9 +22,10 @@ create table if not exists public.ticket_orders (
   phone_number text not null,
   email text not null,
   quantity int not null check (quantity > 0),
-  qr_code text not null,
+  qr_code text,
+  qr_used boolean not null default false,
   amount_jod numeric(10, 2) not null default 0,
-  order_status text not null default 'confirmed',
+  order_status text not null default 'pending',
   payment_status text not null default 'unpaid',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -167,6 +168,10 @@ insert into storage.buckets (id, name, public)
 values ('car-images', 'car-images', true)
 on conflict (id) do nothing;
 
+insert into storage.buckets (id, name, public)
+values ('qr-codes', 'qr-codes', true)
+on conflict (id) do nothing;
+
 drop policy if exists "public upload car images" on storage.objects;
 create policy "public upload car images"
 on storage.objects for insert to anon, authenticated
@@ -176,3 +181,14 @@ drop policy if exists "public view car images" on storage.objects;
 create policy "public view car images"
 on storage.objects for select to anon, authenticated
 using (bucket_id = 'car-images');
+
+drop policy if exists "admin manage qr codes" on storage.objects;
+create policy "admin manage qr codes"
+on storage.objects for all to authenticated
+using (bucket_id = 'qr-codes' and exists (select 1 from public.admins a where a.id = auth.uid()))
+with check (bucket_id = 'qr-codes' and exists (select 1 from public.admins a where a.id = auth.uid()));
+
+drop policy if exists "public view qr codes" on storage.objects;
+create policy "public view qr codes"
+on storage.objects for select to anon, authenticated
+using (bucket_id = 'qr-codes');

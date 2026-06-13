@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import QRCode from "qrcode";
 import { createServiceRoleClient } from "@/lib/supabase/server";
 import { createTicketId } from "@/lib/utils";
 import { TICKET_TYPES } from "@/lib/constants";
@@ -25,17 +24,7 @@ export async function POST(request: Request) {
     }
 
     const ticketId = createTicketId();
-    const qrPayload = JSON.stringify({
-      ticketId,
-      ticketType,
-      fullName,
-      quantity
-    });
-    const qrCodeDataUrl = await QRCode.toDataURL(qrPayload, {
-      width: 360,
-      margin: 1,
-      color: { dark: "#0A0A0A", light: "#FFD400" }
-    });
+    const amountJod = TICKET_TYPES[ticketType as keyof typeof TICKET_TYPES].price * quantity;
 
     const supabase = createServiceRoleClient();
     const { error } = await supabase.from("ticket_orders").insert({
@@ -45,14 +34,16 @@ export async function POST(request: Request) {
       phone_number: phoneNumber,
       email,
       quantity,
-      qr_code: qrCodeDataUrl
+      amount_jod: amountJod,
+      order_status: "pending",
+      payment_status: "unpaid"
     });
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ id: ticketId, qrCodeDataUrl });
+    return NextResponse.json({ id: ticketId });
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Unexpected error." },

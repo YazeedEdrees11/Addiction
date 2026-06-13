@@ -52,13 +52,18 @@ export const FAQ_ITEMS = [
       "Yes. Submit one registration form for each car so our curation team can review each build individually."
   },
   {
-    question: "When do I receive ticket confirmation?",
+    question: "When do I receive my QR code?",
     answer:
-      "Immediately after checkout. Your unique ticket ID and QR code are generated instantly."
+      "After booking, your order is pending payment confirmation. Once the admin confirms your CliQ transfer, your QR code will be sent to your WhatsApp."
   },
   {
     question: "Are tickets refundable?",
     answer:
       "Tickets are non-refundable but transferable. Contact support for transfer assistance."
+  },
+  {
+    question: "Is the QR code reusable?",
+    answer:
+      "No. Each QR code is one-time use only. Once scanned at the entrance, it cannot be used again."
   }
 ];

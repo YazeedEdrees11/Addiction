@@ -15,6 +15,9 @@ export async function DELETE(_: Request, context: RouteContext) {
   try {
     const { id } = await context.params;
     const supabase = createServiceRoleClient();
+
+    await supabase.storage.from("qr-codes").remove([`tickets/${id}.png`]);
+
     const { error } = await supabase.from("ticket_orders").delete().eq("id", id);
 
     if (error) {
