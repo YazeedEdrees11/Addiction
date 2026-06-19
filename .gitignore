@@ -6,3 +6,8 @@ out
 coverage
 dist
 *.log
+
+# OpenNext and Wrangler
+.open-next
+.wrangler
+.dev.vars
