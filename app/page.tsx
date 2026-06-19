@@ -147,23 +147,47 @@ export default async function HomePage() {
         <div className="container">
           <SectionHeading badge="Contact" title="Need More Details?" />
           <div className="grid gap-6 md:grid-cols-3">
-            <Card>
-              <CardContent className="p-6 text-center">
+            <Card className="hover:border-accent/30 transition-all duration-300">
+              <a href="mailto:addiction.jo2026@gmail.com" className="block p-6 text-center">
                 <Mail className="mx-auto h-5 w-5 text-accent" />
-                <p className="mt-3 text-white/75">hello@addictionjo.com</p>
-              </CardContent>
+                <p className="mt-3 text-white/75 hover:text-accent transition-colors">
+                  addiction.jo2026@gmail.com
+                </p>
+              </a>
             </Card>
-            <Card>
-              <CardContent className="p-6 text-center">
+            <Card className="hover:border-accent/30 transition-all duration-300">
+              <div className="p-6 text-center">
                 <Phone className="mx-auto h-5 w-5 text-accent" />
-                <p className="mt-3 text-white/75">+962 79 000 0000</p>
-              </CardContent>
+                <div className="mt-3 flex flex-col gap-1">
+                  <a
+                    href="https://wa.me/962795444257"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/75 hover:text-accent transition-colors block"
+                  >
+                    +962 7 9544 4257
+                  </a>
+                  <a
+                    href="https://wa.me/962787878807"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/75 hover:text-accent transition-colors block"
+                  >
+                    +962 7 8787 8807
+                  </a>
+                </div>
+              </div>
             </Card>
-            <Card>
-              <CardContent className="p-6 text-center">
+            <Card className="hover:border-accent/30 transition-all duration-300">
+              <a
+                href="https://www.instagram.com/addiction.jo/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block p-6 text-center"
+              >
                 <Instagram className="mx-auto h-5 w-5 text-accent" />
-                <p className="mt-3 text-white/75">@addictionjo</p>
-              </CardContent>
+                <p className="mt-3 text-white/75 hover:text-accent transition-colors">@addiction.jo</p>
+              </a>
             </Card>
           </div>
           <div className="mt-8 text-center">

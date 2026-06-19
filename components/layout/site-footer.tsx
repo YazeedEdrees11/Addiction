@@ -26,15 +26,38 @@ export function SiteFooter() {
           <div>
             <p className="font-heading text-lg font-semibold text-white">Connect</p>
             <div className="mt-3 space-y-3 text-white/70">
-              <p className="flex items-center gap-2">
-                <Instagram className="h-4 w-4 text-accent" /> @addictionjo
-              </p>
-              <p className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-accent" /> hello@addictionjo.com
-              </p>
-              <p className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-accent" /> +962 79 000 0000
-              </p>
+              <a
+                href="https://www.instagram.com/addiction.jo/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:text-accent transition-colors"
+              >
+                <Instagram className="h-4 w-4 text-accent" /> @addiction.jo
+              </a>
+              <a
+                href="mailto:addiction.jo2026@gmail.com"
+                className="flex items-center gap-2 hover:text-accent transition-colors"
+              >
+                <Mail className="h-4 w-4 text-accent" /> addiction.jo2026@gmail.com
+              </a>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://wa.me/962795444257"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-accent transition-colors"
+                >
+                  <Phone className="h-4 w-4 text-accent" /> +962 7 9544 4257
+                </a>
+                <a
+                  href="https://wa.me/962787878807"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-accent transition-colors pl-6"
+                >
+                  +962 7 8787 8807
+                </a>
+              </div>
             </div>
           </div>
         </div>
