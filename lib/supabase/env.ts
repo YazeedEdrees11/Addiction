@@ -10,11 +10,14 @@ function getEnvValue(key: string): string | undefined {
   // 2. Try Cloudflare Context (for runtime variables in OpenNext Worker)
   try {
     const { env } = getCloudflareContext();
-    if (env && (env as any)[key]) {
-      return (env as any)[key] as string;
+    if (env) {
+      console.log(`Cloudflare env keys: ${JSON.stringify(Object.keys(env))}`);
+      if (env && (env as any)[key]) {
+        return (env as any)[key] as string;
+      }
     }
   } catch (e) {
-    // Context not available (e.g. during build or local dev)
+    console.log("Failed to get Cloudflare context:", e);
   }
 
   return undefined;
