@@ -72,16 +72,26 @@ export default function ContactPage() {
               </CardContent>
             </Card>
 
-            <div className="overflow-hidden rounded-2xl border border-white/10">
-              <iframe
-                title="Airport Road Amman"
-                src="https://www.google.com/maps?q=Airport+Road,+Amman,+Jordan&output=embed"
-                width="100%"
-                height="320"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="border-0 [filter:grayscale(1)_invert(0.92)_contrast(1.15)_brightness(0.7)_saturate(0.35)]"
-              />
+            <div className="space-y-3">
+              <div className="overflow-hidden rounded-2xl border border-white/10">
+                <iframe
+                  title="Hujrah Village | World Cup Fan Zone"
+                  src="https://www.google.com/maps?q=Hujrah+Village+Airport+Road+Amman+Jordan&output=embed"
+                  width="100%"
+                  height="320"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="border-0 [filter:grayscale(1)_invert(0.92)_contrast(1.15)_brightness(0.7)_saturate(0.35)]"
+                />
+              </div>
+              <a
+                href="https://maps.app.goo.gl/RQt4EhtkPxMVaLpHA?g_st=iw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full rounded-xl border border-white/10 bg-white/5 py-3 text-sm font-medium text-white/80 hover:bg-white/10 hover:text-white transition-all"
+              >
+                Open in Google Maps
+              </a>
             </div>
           </div>
         </div>
