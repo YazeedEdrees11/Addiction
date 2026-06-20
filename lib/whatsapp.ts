@@ -1,21 +1,19 @@
 const WHATSAPP_API_VERSION = "v21.0";
 
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+
 // Helper to access environment variables safely on both Node.js (local dev) and Cloudflare Workers (runtime)
 function getEnvValue(key: string): string | undefined {
   if (process.env[key]) {
     return process.env[key];
   }
-  if (typeof window === "undefined") {
-    try {
-      const moduleName = "@opennextjs/cloudflare";
-      const { getCloudflareContext } = require(moduleName);
-      const cfEnv = getCloudflareContext().env;
-      if (cfEnv && cfEnv[key]) {
-        return cfEnv[key] as string;
-      }
-    } catch (e) {
-      // ignore
+  try {
+    const { env } = getCloudflareContext();
+    if (env && (env as any)[key]) {
+      return (env as any)[key] as string;
     }
+  } catch (e) {
+    // ignore
   }
   return undefined;
 }

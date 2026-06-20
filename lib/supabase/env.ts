@@ -1,3 +1,5 @@
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+
 // Helper to access environment variables safely on both Node.js (local dev) and Cloudflare Workers (runtime)
 function getEnvValue(key: string): string | undefined {
   // 1. Try standard process.env
@@ -5,18 +7,14 @@ function getEnvValue(key: string): string | undefined {
     return process.env[key];
   }
 
-  // 2. Try Cloudflare Context (for runtime variables in OpenNext Worker - Server side only)
-  if (typeof window === "undefined") {
-    try {
-      const moduleName = "@opennextjs/cloudflare";
-      const { getCloudflareContext } = require(moduleName);
-      const cfEnv = getCloudflareContext().env;
-      if (cfEnv && cfEnv[key]) {
-        return cfEnv[key] as string;
-      }
-    } catch (e) {
-      // Context not available (e.g. during build or local dev)
+  // 2. Try Cloudflare Context (for runtime variables in OpenNext Worker)
+  try {
+    const { env } = getCloudflareContext();
+    if (env && (env as any)[key]) {
+      return (env as any)[key] as string;
     }
+  } catch (e) {
+    // Context not available (e.g. during build or local dev)
   }
 
   return undefined;
