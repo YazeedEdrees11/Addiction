@@ -18,18 +18,6 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     optimizePackageImports: ["lucide-react"]
-  },
-  async rewrites() {
-    // Rewrite API requests to Vercel only when building for Cloudflare Workers CI
-    if (process.env.WORKERS_CI === "1") {
-      return [
-        {
-          source: "/api/:path*",
-          destination: "https://addiction-eta.vercel.app/api/:path*"
-        }
-      ];
-    }
-    return [];
   }
 };
 
